@@ -2,9 +2,9 @@
     <div>
 
         <div class="content">
-            <div class="login">
 
-                <div class="login-right">
+
+                <div class="login">
                     <div class="right-title">
 
                         <span>系统管理</span>
@@ -20,18 +20,20 @@
                             <input type="password" placeholder="请输入密码">
                         </table>
                         <router-link to="/home">
-                        <input id="login-button" type="button" value="登录">
+                        <input id="login-button" type="button" value="登录" @click="login">
                         </router-link>
                     </div>
                 </div>
             </div>
-        </div>
+
 
         <router-view></router-view>
     </div>
 </template>
 
 <script>
+    import { Toast } from 'mint-ui';
+
     export default {
         data(){
             return{
@@ -41,6 +43,10 @@
         },
         methods:{
 
+            login(){
+
+                Toast('登录')
+            }
 
         }
     }
@@ -48,36 +54,27 @@
 
 <style scoped>
     .content {
-        height: 786px;
+        height: 100%;
         width: 100%;
-        background-color: #F8F8F8;
         text-align: center;
         vertical-align: middle;
-        padding-top: 1px;
     }
+
+
 
     .login {
         width: 440px;
         height: 430px;
-        margin:  auto;
+        box-shadow: 2px 2px 5px rgba(178,178,178,0.11);
+        border-radius: 3px;
+        margin: auto;
         position: absolute;
+        border-top: 3px solid #001030;
+        color: #424242;
         top: 0px;
         left: 0px;
         right: 0px;
         bottom: 0px;
-    }
-
-
-    /*右侧*/
-    .login-right {
-        width: 440px;
-        height: 430px;
-        margin-left: 20px;
-        box-shadow: 2px 2px 5px rgba(178,178,178,0.11);
-        background-color: white;
-        border-radius: 3px;
-        border-top: 3px solid #00A7FF;
-        color: #424242;
     }
 
     .right-title {
@@ -133,8 +130,8 @@
         margin-top: 50px;
         border-radius: 21px;
         background-image: linear-gradient(90deg,
-        rgba(0, 114, 255, 0.61) ,
-        rgba(0, 198, 255, 0.61));
+        rgb(0, 16, 48),
+        rgba(4, 34, 118, 0.84));
 
     }
     #login-button:active{
