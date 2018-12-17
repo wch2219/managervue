@@ -20,9 +20,8 @@
                             <input type="password" placeholder="请输入密码">
                         </table>
 
-                        <router-link to="/home">
+
                             <input id="login-button" type="button" value="登录" @click="login">
-                        </router-link>
                     </div>
                 </div>
             </div>
@@ -34,7 +33,7 @@
 
 <script>
     import { Toast } from 'mint-ui';
-
+    import { Indicator } from 'mint-ui';
     export default {
         data(){
             return{
@@ -45,10 +44,17 @@
         methods:{
 
             login(){
-
+                Indicator.open({
+                    text: 'Loading...',
+                    spinnerType: 'fading-circle'
+                });
                 this.axios.get('http://192.168.1.134:8080/demo/test/hello').then((response) => {
-
+                    Indicator.close();
                     console.log(response.data)
+                    this.$router.push({path:'/home'})
+                }).catch((response) => {
+                    Indicator.close();
+                   Toast('失败')
                 })
 
             }
