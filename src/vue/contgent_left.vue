@@ -3,16 +3,16 @@
         <span class="title">导航菜单</span>
         <div>
             <ul>
-                <li v-for="tab in tabs">
-                    {{ tab.text }}
+                <li v-for="(tab,index) in tabs" :key="index" @click="openclick(index)">
+                    <span class="parent">{{ tab.text }} </span>
+                    <ul v-for="tabsss in tab.tabss" v-if="tab.open">
 
+                    <li>
+                    <span class="childen">{{ tabsss.text }}</span>
+                    </li>
+                    </ul>
                 </li>
-                <!--<ul v-for="tabsss in tab.tabss">-->
 
-                    <!--<li>-->
-                        <!--<span>{{ tabsss.text }}</span>-->
-                    <!--</li>-->
-                <!--</ul>-->
             </ul>
 
         </div>
@@ -22,37 +22,37 @@
 <script>
     export default {
 
-        data: {
-            // tabs: [
-            //     {
-            //         text: '系统管理',
-            //         tabss: [
-            //             {text: '管理员管理'},
-            //
-            //         ]
-            //     },
-            //     {
-            //         text: '管理',
-            //         tabss: [
-            //             {text: '管理员管理'},
-            //             {text: '管理员管理'},
-            //             {text: '管理员管理'},
-            //             {text: '管理员管理'},
-            //             {text: '管理员管理'},
-            //
-            //         ]
-            //     },
-            //
-            // ]
+        data() {
+            return {
+                tabs: [
+                    {
+                        text: '系统管理',
+                        open:false,
+                        tabss: [
+                            {text: '管理员管理'},
 
-            tabs: [
-                { text: '巴士' },
-                { text: '快车' },
-                { text: '专车' },
-                { text: '顺风车' },
-                { text: '出租车' },
-                { text: '代驾' }
-            ]
+                        ]
+                    },
+                    {
+                        open:false,
+                        text: '管理',
+                        tabss: [
+                            {text: '管理员管理'},
+                            {text: '管理员管理'},
+                            {text: '管理员管理'},
+                            {text: '管理员管理'},
+                            {text: '管理员管理'},
+                        ]
+                    },
+
+                ]
+
+            }
+        },
+        methods:{
+            openclick(index){
+                this.tabs[index].open = !this.tabs[index].open;
+            }
         }
     }
 </script>
@@ -69,5 +69,19 @@
         padding-left: 10px;
         box-sizing: border-box;
 
+    }
+    .childen,
+    .parent{
+        padding-left: 10px;
+        display: block;
+        width: 230px;
+        height: 30px;
+        background: #002330;
+        font-size: 12px;
+        color: white;
+        box-sizing: border-box;
+    }
+    .childen{
+        padding-left: 20px;
     }
 </style>

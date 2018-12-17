@@ -34,12 +34,15 @@
 <script>
     import { Toast } from 'mint-ui';
     import { Indicator } from 'mint-ui';
+    import {AxiosInstance as axios} from "axios";
     export default {
         data(){
             return{
                 nama:'sadasdasdas',
 
             };
+        },
+        created:{
         },
         methods:{
 
@@ -59,7 +62,8 @@
 
             }
 
-        }
+        },
+
     }
 </script>
 

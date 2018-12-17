@@ -32,7 +32,31 @@ module.exports = {
             {test:/\.less$/, use: ['style-loader','css-loader','less-loader']},//配置.less第三方规则
             {test:/\.(jpg|png|gif|jpeg)$/, use: "url-loader?limit=7631"},//图片处理
             {test:/\.js$/, use: "babel-loader",exclude:/node_modules/},//配Bable 来转换高级的
-            {test:/\.vue$/, use: 'vue-loader'}
+            {test:/\.vue$/, use: 'vue-loader'},
+            {
+                test: /\.svg$/,
+                loader: 'vue-svg-loader',
+            },
+            {
+                test: /\.(woff?|eot|ttf|otf)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name:'./fonts/[name].[hash:7].[ext]'
+                }
+            },
+
+            {
+                test: /\.ttf$/,
+                use: [
+                    {
+                        loader: 'ttf-loader',
+                        options: {
+                            name: './font/[hash].[ext]',
+                        },
+                    },
+                ]
+            }
         ]
     },
     resolve: {
