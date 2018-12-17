@@ -19,8 +19,9 @@
                             <span>密码</span> <br>
                             <input type="password" placeholder="请输入密码">
                         </table>
+
                         <router-link to="/home">
-                        <input id="login-button" type="button" value="登录" @click="login">
+                            <input id="login-button" type="button" value="登录" @click="login">
                         </router-link>
                     </div>
                 </div>
@@ -45,7 +46,11 @@
 
             login(){
 
-                Toast('登录')
+                this.axios.get('http://192.168.1.134:8080/demo/test/hello').then((response) => {
+
+                    console.log(response.data)
+                })
+
             }
 
         }

@@ -2,16 +2,17 @@
     <div>
         <span class="title">导航菜单</span>
         <div>
-            <ul v-for="tab in tabs">
-                <li>
+            <ul>
+                <li v-for="tab in tabs">
                     <span>{{ tab.text }}</span>
-                    <ul v-for="tabsss in tab.tabss">
 
-                        <li>
-                            <span>{{ tabsss.text }}</span>
-                        </li>
-                    </ul>
                 </li>
+                <!--<ul v-for="tabsss in tab.tabss">-->
+
+                    <!--<li>-->
+                        <!--<span>{{ tabsss.text }}</span>-->
+                    <!--</li>-->
+                <!--</ul>-->
             </ul>
 
         </div>
@@ -20,7 +21,7 @@
 
 <script>
     export default {
-        name: "",
+
         data: {
             tabs: [
                 {
