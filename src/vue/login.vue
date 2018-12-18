@@ -4,27 +4,27 @@
         <div class="content">
 
 
-                <div class="login">
-                    <div class="right-title">
+            <div class="login">
+                <div class="right-title">
 
-                        <span>系统管理</span>
-                    </div>
+                    <span>系统管理</span>
+                </div>
 
-                    <div class="login-input">
-                        <table>
-                            <span>手机号/邮箱</span><br>
-                            <input type="text" placeholder="请输入用户名">
-                        </table>
-                        <table>
-                            <span>密码</span> <br>
-                            <input type="password" placeholder="请输入密码">
-                        </table>
+                <div class="login-input">
+                    <table>
+                        <span>手机号/邮箱</span><br>
+                        <input type="text" placeholder="请输入用户名" v-model="accound">
+                    </table>
+                    <table>
+                        <span>密码</span> <br>
+                        <input type="password" placeholder="请输入密码" v-model="password">
+                    </table>
 
 
-                            <input id="login-button" type="button" value="登录" @click="login">
-                    </div>
+                    <input id="login-button" type="button" value="登录" @click="login">
                 </div>
             </div>
+        </div>
 
 
         <router-view></router-view>
@@ -32,34 +32,57 @@
 </template>
 
 <script>
-    import { Toast } from 'mint-ui';
-    import { Indicator } from 'mint-ui';
+    import {Toast} from 'mint-ui';
+    import {Indicator} from 'mint-ui';
     import {AxiosInstance as axios} from "axios";
+
     export default {
-        data(){
-            return{
-                nama:'sadasdasdas',
+        data() {
+            return {
+                accound: '',
+                password: '',
+                logindata: {code: 204, mess: "账号空", result: null}
 
             };
         },
-        created:{
-        },
-        methods:{
+        created: {},
+        methods: {
 
-            login(){
+            login() {
+
+                if (this.accound.length == 0) {
+                    Toast('账号为空')
+                    return
+                }
+                if (this.password.length == 0) {
+                    Toast('密码为空')
+                    return
+                }
+                var params = new URLSearchParams();
+                params.append('phone', this.accound);       //你要传给后台的参数值 key/value
+                params.append('password', this.password);
                 Indicator.open({
                     text: 'Loading...',
                     spinnerType: 'fading-circle'
                 });
-                this.axios.get('http://192.168.1.134:8080/demo/test/hello').then((response) => {
-                    Indicator.close();
-                    console.log(response.data)
-                    this.$router.push({path:'/home'})
-                }).catch((response) => {
-                    Indicator.close();
-                   Toast('失败')
-                })
 
+                this.axios.post('http://192.168.3.2:8080/manager/user/login', {
+                    phone:this.accound,
+                    password:this.password
+                },{emulateJSON: true}).then(function (response) {
+                    Indicator.close();
+                    console.log(response);
+                    this.logindata = response.data();
+                    if (this.logindata.code != 200) {
+                        Toast(this.logindata.mess)
+                    } else {
+                        this.$router.push({path: '/home'})
+                    }
+                }).catch(function (error) {
+                    Indicator.close();
+                    console.log(error);
+                    Toast(error)
+                });
             }
 
         },
@@ -76,11 +99,10 @@
     }
 
 
-
     .login {
         width: 440px;
         height: 430px;
-        box-shadow: 2px 2px 5px rgba(178,178,178,0.11);
+        box-shadow: 2px 2px 5px rgba(178, 178, 178, 0.11);
         border-radius: 3px;
         margin: auto;
         position: absolute;
@@ -100,7 +122,6 @@
         vertical-align: center;
         margin-top: 34px;
     }
-
 
 
     .right-title span {
@@ -149,8 +170,9 @@
         rgba(4, 34, 118, 0.84));
 
     }
-    #login-button:active{
 
-        box-shadow: 2px 2px 5px rgba(178,178,178,0.5);
+    #login-button:active {
+
+        box-shadow: 2px 2px 5px rgba(178, 178, 178, 0.5);
     }
 </style>
