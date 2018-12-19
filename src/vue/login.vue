@@ -13,11 +13,11 @@
                 <div class="login-input">
                     <table>
                         <span>手机号/邮箱</span><br>
-                        <input type="text" placeholder="请输入用户名" v-model="accound">
+                        <input type="text" placeholder="请输入用户名" v-model="loginParams.phone">
                     </table>
                     <table>
                         <span>密码</span> <br>
-                        <input type="password" placeholder="请输入密码" v-model="password">
+                        <input type="password" placeholder="请输入密码" v-model="loginParams.password">
                     </table>
 
 
@@ -34,42 +34,47 @@
 <script>
     import {Toast} from 'mint-ui';
     import {Indicator} from 'mint-ui';
-    import {AxiosInstance as axios} from "axios";
 
     export default {
         data() {
             return {
-                accound: '',
-                password: '',
+                loginParams:{
+                    phone: '',
+                    password: '',
+                },
+
                 logindata: {code: 204, mess: "账号空", result: null}
 
             };
         },
-        created: {},
+        created: {
+
+            this:login(),
+        },
         methods: {
 
             login() {
 
-                if (this.accound.length == 0) {
+                if (this.loginParams.phone.length == 0) {
                     Toast('账号为空')
                     return
                 }
-                if (this.password.length == 0) {
+                if (this.loginParams.password.length == 0) {
                     Toast('密码为空')
                     return
                 }
-                var params = new URLSearchParams();
-                params.append('phone', this.accound);       //你要传给后台的参数值 key/value
-                params.append('password', this.password);
+
+
                 Indicator.open({
                     text: 'Loading...',
                     spinnerType: 'fading-circle'
                 });
 
-                this.axios.post('http://192.168.3.2:8080/manager/user/login', {
-                    phone:this.accound,
-                    password:this.password
-                },{emulateJSON: true}).then(function (response) {
+                this.axios.post('http://192.168.1.135:8080/manager/user/login', {
+                    // phone:this.loginParams.phone,
+                    // password:this.loginParams.password
+                    data:this.loginParams
+                }).then(function (response) {
                     Indicator.close();
                     console.log(response);
                     this.logindata = response.data();
