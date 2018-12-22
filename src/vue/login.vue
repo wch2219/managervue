@@ -12,11 +12,11 @@
 
                 <div class="login-input">
                     <table>
-                        <span>手机号/邮箱</span><br>
+                        <span>手机号/邮箱</span>
                         <input type="text" placeholder="请输入用户名" v-model="loginParams.phone">
                     </table>
                     <table>
-                        <span>密码</span> <br>
+                        <span>密码</span>
                         <input type="password" placeholder="请输入密码" v-model="loginParams.password">
                     </table>
 
@@ -49,7 +49,7 @@
         },
         created: {
 
-            this:login(),
+            // this:login(),
         },
         methods: {
 
@@ -63,23 +63,22 @@
                     Toast('密码为空')
                     return
                 }
-
-
                 Indicator.open({
                     text: 'Loading...',
                     spinnerType: 'fading-circle'
                 });
 
                 this.axios.post('http://192.168.1.135:8080/manager/user/login', {
-                    // phone:this.loginParams.phone,
-                    // password:this.loginParams.password
-                    data:this.loginParams
+                    phone:this.loginParams.phone,
+                    password:this.loginParams.password
+                    // data:this.loginParams
                 }).then(function (response) {
                     Indicator.close();
                     console.log(response);
                     this.logindata = response.data();
                     if (this.logindata.code != 200) {
-                        Toast(this.logindata.mess)
+                        Toast(this.logindata.mess);
+                        console.log(response.data.mess)
                     } else {
                         this.$router.push({path: '/home'})
                     }
@@ -133,7 +132,9 @@
         line-height: 26px;
         height: 26px;
         margin-left: 6px;
-        float: left;
+
+
+        display: block;
         font-size: 22px;
     }
 
@@ -143,15 +144,19 @@
         margin-top: 6px;
         margin-left: 40px;
         font-size: 14px;
+        position: relative;
+    }
+    .login-input table{
 
     }
-
     .login-input input {
         border: 1px solid #dbdbdb;
         border-radius: 5px;
         width: 360px;
+
         margin-top: 10px;
         padding: 10px;
+        box-sizing: border-box;
     }
 
     .login-input span {
@@ -160,7 +165,7 @@
     }
 
     .login-input input:focus {
-        border-bottom: 1.5px solid #dbdbdb;
+        /*border-bottom: 1.5px solid #dbdbdb;*/
     }
 
     /*登录按钮*/
