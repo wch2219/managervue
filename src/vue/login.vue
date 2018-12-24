@@ -54,22 +54,20 @@
 
             login: function () {
 
-                if (this.loginParams.phone.length == 0) {
-                    Toast('账号为空')
+                if (this.loginParams.phone.length === 0) {
+                    Toast('账号为空');
                     return
                 }
-                if (this.loginParams.password.length == 0) {
-                    Toast('密码为空')
+                if (this.loginParams.password.length === 0) {
+                    Toast('密码为空');
                     return
                 }
 
                 this.$post(this.$api.loginapi, this.loginParams)
                     .then((response) => {
-                        // let a = JSON.parse(response.data);
                         console.log(response);
-
-
-                        console.log(response.data.result.token);
+                        localStorage.setItem("token",response.result.token);
+                        console.log( localStorage.getItem("token"))
                     })
 
             }

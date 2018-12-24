@@ -5,7 +5,7 @@ import { Message } from 'element-ui';
 http.defaults.baseURL = 'http://192.168.1.135:8080/manager/';
 http.defaults.headers.post['Content-Type'] = 'application/json';
 // http.defaults.headers.post['Content-Type'] = ' x-www-form-urlencoded';
-// http.defaults.headers.post['token'] = localStorage.getItem('token');
+http.defaults.headers.post['token'] = localStorage.getItem('token');
 
 
 http.defaults.timeout = 5000;

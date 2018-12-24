@@ -47,14 +47,14 @@ var router = new VueRouter({
         },
 
     ]
-})
+});
 
 var vm = new Vue({
     el:'#app',
     router,
     render:c => c(app)
-})
+});
 
 module.exports={
 
-}
+};
