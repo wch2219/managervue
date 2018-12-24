@@ -33,7 +33,6 @@
 
 <script>
     import {Toast} from 'mint-ui';
-    import {Indicator} from 'mint-ui';
 
     export default {
         data() {
@@ -53,7 +52,7 @@
         },
         methods: {
 
-            login() {
+            login: function () {
 
                 if (this.loginParams.phone.length == 0) {
                     Toast('账号为空')
@@ -63,30 +62,16 @@
                     Toast('密码为空')
                     return
                 }
-                Indicator.open({
-                    text: 'Loading...',
-                    spinnerType: 'fading-circle'
-                });
 
-                this.axios.post('http://192.168.1.135:8080/manager/user/login', {
-                    phone:this.loginParams.phone,
-                    password:this.loginParams.password
-                    // data:this.loginParams
-                }).then(function (response) {
-                    Indicator.close();
-                    console.log(response);
-                    this.logindata = response.data();
-                    if (this.logindata.code != 200) {
-                        Toast(this.logindata.mess);
-                        console.log(response.data.mess)
-                    } else {
-                        this.$router.push({path: '/home'})
-                    }
-                }).catch(function (error) {
-                    Indicator.close();
-                    console.log(error);
-                    Toast(error)
-                });
+                this.$post(this.$api.loginapi, this.loginParams)
+                    .then((response) => {
+                        // let a = JSON.parse(response.data);
+                        console.log(response);
+
+
+                        console.log(response.data.result.token);
+                    })
+
             }
 
         },
