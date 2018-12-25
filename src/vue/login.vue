@@ -26,7 +26,6 @@
             </div>
         </div>
 
-
         <router-view></router-view>
     </div>
 </template>
@@ -67,7 +66,11 @@
                     .then((response) => {
                         console.log(response);
                         localStorage.setItem("token",response.result.token);
-                        console.log( localStorage.getItem("token"))
+                        console.log( localStorage.getItem("token"));
+                        if (response.code === 200){
+                            this.$router.push({path: '/home'})
+                        }
+
                     })
 
             }
