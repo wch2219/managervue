@@ -18,7 +18,7 @@
                             <span>系统管理</span>
                         </template>
 
-                        <el-menu-item index="1-1">
+                        <el-menu-item index="1-1" >
                             <template slot="title">
                                 <img src="../images/manager.png">
                                 <span>管理员管理</span>
